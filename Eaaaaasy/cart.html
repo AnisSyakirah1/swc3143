@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Shopping Cart</h1>
+        <a href="index.html" class="back-link">Continue Shopping</a>
+    </header>
+
+    <section id="cart-items">
+        <ul id="cart-list"></ul>
+        <p>Total: RM<span id="total-price">0</span></p>
+
+        <!-- Interactive Payment Method Section -->
+        <div id="payment-method-section">
+            <h3>Select Payment Method:</h3>
+            <div class="payment-options">
+                <button class="payment-option" onclick="selectPayment('credit-card')">Credit Card</button>
+                <button class="payment-option" onclick="selectPayment('paypal')">PayPal</button>
+                <button class="payment-option" onclick="selectPayment('bank-transfer')">Bank Transfer</button>
+            </div>
+        </div>
+
+        <button onclick="checkout()" class="checkout-button">Checkout</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
