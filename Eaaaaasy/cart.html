@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/logo.png">
+</head>
+<body onload="loadCart()">
+    <header>
+        <h1>Shopping Cart</h1>
+        <a href="index.html" class="back-link">Continue Shopping</a>
+    </header>
+
+    <section id="cart-items">
+        <h2>Your Cart</h2>
+        <ul id="cart-list"></ul>
+        <p>Total: <span id="total-price">RM0.00</span></p>
+
+        <!-- Payment Method Section -->
+        <div id="payment-method-section">
+            <h3>Select Payment Method:</h3>
+            <div class="payment-options">
+                <button class="payment-option" onclick="togglePayment('credit-card')">Credit Card</button>
+                <button class="payment-option" onclick="togglePayment('atome')">Atome</button>
+                <button class="payment-option" onclick="togglePayment('maybank')">Online Banking (Maybank2U)</button>
+            </div>
+            
+            <!-- Credit Card Form -->
+            <div id="credit-card-form" class="form-container">
+                <h2>Enter Credit Card Details</h2>
+                <form id="cardForm" onsubmit="submitCreditCard(event)">
+                    <input type="text" placeholder="Card Number" required maxlength="16" pattern="\d{16}">
+                    <input type="text" placeholder="Cardholder Name" required>
+                    <input type="text" placeholder="Expiry Date (MM/YY)" required pattern="\d{2}/\d{2}">
+                    <input type="text" placeholder="CVV" required maxlength="3" pattern="\d{3}">
+                    <button type="submit">Pay Now</button>
+                </form>
+            </div>
+            
+            <!-- Atome Button -->
+            <div id="atome-link" class="form-container">
+                <h2>Atome Payment</h2>
+                <p>Redirecting to Atome for payment...</p>
+                <button onclick="redirectToAtome()">Go to Atome</button>
+            </div>
+            
+            <!-- Maybank2U Button -->
+            <div id="maybank-link" class="form-container">
+                <h2>Online Banking with Maybank2U</h2>
+                <p>Redirecting to Maybank2U for payment...</p>
+                <button onclick="redirectToMaybank()">Go to Maybank2U</button>
+            </div>
+
+        </div>
+        <!-- Checkout Button -->
+        <button id="checkout-button" onclick="checkout()">Checkout</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

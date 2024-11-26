@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Inventory System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/logo.png">
+</head>
+<body>
+    <h1>Automated Inventory System</h1>
+    <div class="container">
+        <div class="form-group">
+            <input type="text" id="productName" placeholder="Product Name" required>
+            <input type="number" id="productQuantity" placeholder="Quantity" required>
+        </div>
+        <button id="addButton" onclick="addOrUpdateProduct()">Add Product</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryTable">
+                <!-- Inventory items will be added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let productId = 1;
+        let inventory = [];
+        let editingProductId = null; // To track the product being edited
+
+        function addOrUpdateProduct() {
+            const productName = document.getElementById('productName').value;
+            const productQuantity = document.getElementById('productQuantity').value;
+
+            if (productName === "" || productQuantity === "") {
+                alert("Please fill out both fields.");
+                return;
+            }
+
+            if (editingProductId) {
+                // Update existing product
+                const product = inventory.find((item) => item.id === editingProductId);
+                product.name = productName;
+                product.quantity = parseInt(productQuantity);
+                editingProductId = null; // Reset editing mode
+                document.getElementById('addButton').innerText = "Add Product";
+            } else {
+                // Add new product
+                const product = {
+                    id: productId++,
+                    name: productName,
+                    quantity: parseInt(productQuantity)
+                };
+                inventory.push(product);
+            }
+
+            document.getElementById('productName').value = '';
+            document.getElementById('productQuantity').value = '';
+            updateInventoryTable();
+        }
+
+        function updateInventoryTable() {
+            const tableBody = document.getElementById('inventoryTable');
+            tableBody.innerHTML = '';
+
+            inventory.forEach((product) => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.quantity}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editProduct(${product.id})">Update</button>
+                        <button class="delete-btn" onclick="removeProduct(${product.id})">Delete</button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function editProduct(id) {
+            const product = inventory.find((item) => item.id === id);
+            if (product) {
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productQuantity').value = product.quantity;
+                editingProductId = id;
+                document.getElementById('addButton').innerText = "Save Changes";
+            }
+        }
+
+        function removeProduct(id) {
+            const productIndex = inventory.findIndex((item) => item.id === id);
+            if (productIndex !== -1) {
+                inventory.splice(productIndex, 1);
+                updateInventoryTable();
+            }
+        }
+    </script>
+</body>
+</html>
